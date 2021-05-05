@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Font Awesome 6 Pro-Thin-100.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="DesignData.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DesignData Include="DesignData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </DesignData>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Font Awesome 6 Pro-Thin-100.otf" />
+  </ItemGroup>
+
+</Project>

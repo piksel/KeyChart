@@ -1,0 +1,57 @@
+﻿<ContentDialog
+    x:Class="Piksel.UWP.Dialogs.RenameDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Piksel.UWP.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
+    mc:Ignorable="d"
+    x:Name="Dialog"
+    Title="Rename"
+    PrimaryButtonText="Rename"
+    DefaultButton="Primary"
+    CloseButtonText="Cancel" 
+    Loaded="Dialog_Loaded">
+
+    <UserControl>
+        <StackPanel x:Name="Panel">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="TextBoxStates">
+                <VisualState x:Name="TextBoxNotEmptyState" />
+                <VisualState x:Name="TextBoxEmptyState">
+                    <VisualState.StateTriggers>
+                        <triggers:IsNullOrEmptyStateTrigger 
+                            Value="{x:Bind NewName, Mode=OneWay}"/>
+                        </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ErrorMessage.Text" Value="Name cannot be empty!" />
+                        <Setter Target="ErrorMessage.Opacity" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="TextBoxUnchangedState">
+                    <VisualState.StateTriggers>
+                        <triggers:IsEqualStateTrigger 
+                            Value="{x:Bind NewName, Mode=OneWay}" To="{x:Bind OldName, Mode=OneWay}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ErrorMessage.Text" Value="Name is unchanged" />
+                        <Setter Target="ErrorMessage.Opacity" Value=".5" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <!-- ReSharper disable once IdentifierTypo -->
+        <TextBox Header="New name:" 
+                 Text="{x:Bind NewName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                 TextChanged="TextChanged"
+                 x:Name="NewNameTextbox" />
+            <TextBlock x:Name="ErrorMessage" Visibility="Visible" Opacity="0" Text="">
+                <TextBlock.OpacityTransition>
+                    <ScalarTransition />
+                </TextBlock.OpacityTransition>
+            </TextBlock>
+    </StackPanel>
+        </UserControl>
+</ContentDialog>

@@ -1,0 +1,18 @@
+﻿<ContentDialog
+    x:Class="Piksel.UWP.Dialogs.ConfirmDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Piksel.UWP.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
+    mc:Ignorable="d"
+    x:Name="Dialog"
+    Title="Confirm"
+    PrimaryButtonText="Confirm"
+    DefaultButton="Close"
+    CloseButtonText="Cancel">
+        
+        <TextBlock Text="{x:Bind Message, Mode=OneWay}" d:Text="Dude. You for real?" />
+
+</ContentDialog>

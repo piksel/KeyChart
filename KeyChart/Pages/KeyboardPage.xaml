@@ -1,0 +1,131 @@
+﻿<Page
+    x:Class="KeyChart.Pages.KeyboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pages="using:KeyChart.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:system="using:System"
+    xmlns:tc="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:app="using:KeyChart"
+    xmlns:appd="using:KeyChart.Design"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media" xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
+    xmlns:controls="using:KeyChart.Controls"
+    xmlns:keyboards="using:KeyChart.Keyboards"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        
+        <CollectionViewSource x:Key="KeyboardViewSource" x:Name="KeyboardViewSource" />
+        
+
+        <StaticResource x:Key="GridViewItemContainerStyle1" ResourceKey="GridViewItemExpanded"/>
+        <DataTemplate x:Key="KbdModelItemTemplate" x:DataType="keyboards:KeyboardModel">
+            <Grid HorizontalAlignment="Stretch"  Padding="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.ContextFlyout>
+                    <muxc:CommandBarFlyout x:Name="KeyboardFlyout" Opening="KeyboardFlyout_OnOpening" Placement="RightEdgeAlignedTop">
+                        <muxc:CommandBarFlyout.SecondaryCommands>
+                            <AppBarToggleButton Click="Selected_Clicked"
+                                                Icon="View" Label="Use as primary"
+                                                ToolTipService.ToolTip="Selected"/>
+                            <AppBarButton Click="KeyboardCommand_OnClick" 
+                                          Icon="Bullets" Label="Info" Tag="info" 
+                                          ToolTipService.ToolTip="Info"/>
+                            <AppBarButton Click="KeyboardCommand_OnClick" 
+                                          Icon="Edit" Label="Rename" Tag="rename" 
+                                          ToolTipService.ToolTip="Rename"/>
+                            <AppBarButton Click="KeyboardCommand_OnClick" 
+                                          Icon="Edit" Label="Rebuild" Tag="rebuild" 
+                                          ToolTipService.ToolTip="Rebuild"/>
+                                <AppBarButton Click="KeyboardCommand_OnClick" 
+                                          Icon="Delete" Label="Delete" Tag="delete" 
+                                          ToolTipService.ToolTip="Delete"/>
+                        </muxc:CommandBarFlyout.SecondaryCommands>
+                    </muxc:CommandBarFlyout>
+                </Grid.ContextFlyout>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border x:Name="KeyboardIcon" Grid.Column="0" Margin="0, 0, 10, 0" 
+                        Padding="2, 0" Grid.RowSpan="2" Grid.Row="0">
+                    <TextBlock FontFamily="Assets/fa6-thin.otf#Font Awesome 6 Pro" 
+                               FontSize="48" Text="&#xF11C;" TextAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Grid.Column="1" FontWeight="Thin" FontSize="24" MinWidth="300" Grid.Row="0" 
+                           Text="{Binding Name}"/>
+                <TextBlock Grid.Column="1" Grid.Row="1">
+                    <Run FontWeight="Bold" Text="{Binding Info.KeyboardName}"/>
+                    <Run Text=" | "/>
+                    <Run Text="{Binding KeyMap.Keymap}"/>
+                    <Run Text=" | "/>
+                    <Run Text="{Binding Layout.Count}"/>
+                    <Run Text=" keys, "/>
+                    <Run Text="{Binding LayerStyles.Count}"/>
+                    <Run Text=" layers"/>
+                </TextBlock>
+                <AppBarButton Grid.Column="2" HorizontalAlignment="Center" Icon="More" LabelPosition="Collapsed" Label="More" Margin="0" Grid.RowSpan="2" Grid.Row="0" Tapped="KeyboardMore_OnTapped" VerticalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.Background>
+        <ThemeResource ResourceKey="SystemControlAcrylicWindowBrush"/>
+    </Page.Background>
+
+    <Grid>
+
+        <ListView ItemTemplate="{StaticResource KbdModelItemTemplate}" x:Name="KeyboardModelPicker"
+                  Margin="10"
+                  Padding="0"
+                  ItemsSource="{x:Bind KeyboardModels, Mode=OneWay}"
+                  SelectionChanged="KeyboardModelPicker_OnSelectionChanged"
+                  BorderThickness="1"
+                  d:ListView.ItemsSource="{d:DesignInstance Type=appd:DesignKeyboardModelCollection, IsDesignTimeCreatable=True}"
+                  BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}">
+    
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Background>
+                <AcrylicBrush TintColor="#CC000000"/>
+            </ListView.Background>
+            <ListView.Footer>
+                <CommandBar Background="Transparent" DefaultLabelPosition="Right">
+                    <AppBarButton x:Name="AddQmkButton" 
+                                  Tapped="AddQmkButton_OnTapped" 
+                                  Icon="Add" Label="Add from QMK" />
+                    <AppBarButton x:Name="AddFromFileButton" 
+                                  Icon="Add"
+                                  Label="Add from KeyMap file..."
+                                  Tapped="AddFromFileButton_OnTapped" />
+                </CommandBar>
+            </ListView.Footer>
+        </ListView>
+        <controls:Loading x:Name="KeyboardModelsSpinner" Text="Loading keyboards..." />
+        <muxc:InfoBar
+            x:Name="ErrorBar"
+            IsOpen="False"
+            Severity="Error"
+            
+        />
+    </Grid>
+
+
+</Page>

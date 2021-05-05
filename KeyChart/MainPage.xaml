@@ -1,0 +1,174 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KeyChart"
+    xmlns:p="using:KeyChart.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:msui="using:Microsoft.UI.Xaml.Controls"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
+    xmlns:controls="using:KeyChart.Controls"
+    xmlns:triggers="using:Microsoft.Toolkit.Uwp.UI.Triggers"
+    xmlns:media1="using:Microsoft.Toolkit.Uwp.UI.Media"
+    x:Class="KeyChart.MainPage"
+    mc:Ignorable="d"
+    x:Name="Main"
+    Loaded="Page_Loaded">
+
+
+
+    <Page.Background>
+        
+        <media:AcrylicBrush TintLuminosityOpacity=".2" TintColor="Black" TintOpacity="0"
+                            FallbackColor="Black"
+                            BackgroundSource="HostBackdrop"
+                            />
+        <!--<ThemeResource ResourceKey="CustomAcrylicInAppBrush"/>
+        <ThemeResource ResourceKey="SystemControlChromeMediumLowAcrylicWindowMediumBrush"/>
+        <StaticResource ResourceKey="FullscreenBackground" />-->
+    </Page.Background>
+<Page.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.ThemeDictionaries>
+            <ResourceDictionary x:Key="Default">
+                <media:AcrylicBrush x:Key="CustomAcrylicInAppBrush" BackgroundSource="HostBackdrop" TintOpacity="0.0" TintColor="Black" FallbackColor="Green"/>
+            </ResourceDictionary>
+        </ResourceDictionary.ThemeDictionaries>
+        <Style x:Key="Fa6ThinFont" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Assets/fa6-thin.otf#Font Awesome 6 Pro"></Setter>
+        </Style>
+        <media:AcrylicBrush x:Key="FullscreenBackground" TintLuminosityOpacity=".1" TintColor="Transparent" TintOpacity="0" />
+        </ResourceDictionary>
+
+</Page.Resources>
+<Grid>
+
+    <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup >
+            <VisualState x:Name="fullScreen">
+                <VisualState.StateTriggers>
+                    <triggers:FullScreenModeStateTrigger IsFullScreen="true" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                        <Setter Target="FullscreenButton.Icon" Value="BackToWindow" />
+                </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="windowed">
+                <VisualState.StateTriggers>
+                    <triggers:FullScreenModeStateTrigger IsFullScreen="false" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                        <Setter Target="FullscreenButton.Icon" Value="FullScreen" />
+                </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
+
+        <msui:NavigationView x:Name="SideNav" IsBackButtonVisible="Collapsed"
+                             PaneDisplayMode="LeftCompact" 
+                             SelectionChanged="SideNav_OnSelectionChanged">
+       <msui:NavigationView.MenuItems>
+                <msui:NavigationViewItem Content="Chart" Tag="chart" Icon="Keyboard" />
+                <!--<msui:NavigationViewItem Content="Keyboard" Tag="keyboard" Icon="Keyboard" />-->
+                <msui:NavigationViewItemHeader Content="Layers" Visibility="Collapsed" />
+
+            <msui:NavigationViewItem Content="LayerStyle 1" IsExpanded="true" Visibility="Collapsed">
+                <msui:NavigationViewItem.MenuItems>
+                    <msui:NavigationViewItem SelectsOnInvoked="False">
+
+                        <StackPanel>
+       
+                    <ToggleSwitch Header="Base layer"></ToggleSwitch>
+                    <TextBlock>Label position</TextBlock>
+                            <ListBox>
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+
+                                <TextBlock Style="{StaticResource Fa6ThinFont}" Text=""></TextBlock>
+                                <TextBlock Style="{StaticResource Fa6ThinFont}" Text=""></TextBlock>
+                                <TextBlock Style="{StaticResource Fa6ThinFont}" Text=""></TextBlock>
+                                <TextBlock Style="{StaticResource Fa6ThinFont}" Text=""></TextBlock>
+                            </ListBox>
+                  
+
+                            <TextBlock Text="Color" />
+                            <msui:DropDownButton>
+                                <Rectangle x:Name="CurrentColor" Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{x:Bind Color.Color, Mode=OneWay}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <msui:DropDownButton.Flyout>
+                                    <Flyout>
+                                    <msui:ColorPicker
+                                        x:Name="Color"
+                                        ColorSpectrumShape="Ring"
+                                        IsMoreButtonVisible="False"
+                                        IsColorSliderVisible="True"
+                                        IsColorChannelTextInputVisible="True"
+                                        IsHexInputVisible="True"
+                                        IsAlphaEnabled="False"
+                                        IsAlphaSliderVisible="True"
+                                        IsAlphaTextInputVisible="True"
+                  
+                                        />
+                                    </Flyout>
+                                </msui:DropDownButton.Flyout>
+                            </msui:DropDownButton>
+ 
+
+                        </StackPanel>
+                    </msui:NavigationViewItem>
+                </msui:NavigationViewItem.MenuItems>
+
+            </msui:NavigationViewItem>
+
+
+                
+
+
+        </msui:NavigationView.MenuItems>
+            <Frame x:Name="NavigationFrame" >
+                <controls:Loading IsLoading="True" />
+            </Frame>
+            <!--<Grid x:Name="KeyboardBackground">
+
+            <local:KeyboardView Model="{x:Bind Model, Mode=OneWay}" />
+
+
+            </Grid>-->
+
+    </msui:NavigationView>
+    <AppBarButton Style="{StaticResource AppBarButtonRevealStyle}" 
+                  Icon="FullScreen" Label="Fullscreen" x:Name="FullscreenButton"
+                  Tapped="UIElement_OnTapped"
+                  Visibility="Collapsed"
+                  VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+
+        <Grid x:Name="AppTitleBar" Background="Transparent" Height="{Binding CompactPaneLength, ElementName=NavigationViewControl}" VerticalAlignment="Top">
+        <!-- Width of the padding columns is set in LayoutMetricsChanged handler. -->
+        <!-- Using padding columns instead of Margin ensures that the background
+         paints the area under the caption control buttons (for transparent buttons). -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+            <ColumnDefinition/>
+            <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+        </Grid.ColumnDefinitions>
+        <SymbolIcon Symbol="Keyboard" Grid.Column="1" HorizontalAlignment="Left" Width="20" Height="20" Margin="12,8"  />
+        <!--<Image Source="Assets/Square44x44Logo.png" 
+                       Grid.Column="1" HorizontalAlignment="Left" 
+                       Width="20" Height="20" Margin="12,0" Opacity="0" />-->
+        <TextBlock Text="KeyChart"   x:Name="AppTitle"
+                   Grid.Column="1" 
+                   Style="{StaticResource CaptionTextBlockStyle}" 
+                   Margin="44,8,0,0"/>
+    </Grid>
+
+    </Grid>
+
+
+</Page>

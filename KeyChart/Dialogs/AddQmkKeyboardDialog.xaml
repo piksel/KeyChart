@@ -1,0 +1,85 @@
+﻿<ContentDialog
+    x:Class="KeyChart.Dialogs.AddQmkKeyboardDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KeyChart.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tc="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:KeyChart.Controls"
+    mc:Ignorable="d"
+    Title="Add new keyboard from QMK datbase"
+    CloseButtonText="Cancel"
+    DefaultButton="Primary"
+    PrimaryButtonText="Add Keyboard"
+    IsPrimaryButtonEnabled="False"
+    PrimaryButtonClick="PrimaryButtonClicked">
+
+
+    <StackPanel MinWidth="400" Margin="10" Spacing="10">
+        <Grid>
+            <ComboBox PlaceholderText="Select a keyboard..." 
+                          IsEditable="True" x:Name="KeyboardList" 
+                          HorizontalAlignment="Stretch" 
+                          Header="Keyboard:" 
+                          GotFocus="KeyboardList_OnGotFocus" 
+                          Tapped="KeyboardList_OnTapped" 
+                          SelectionChanged="KeyboardList_OnSelectionChanged" />
+            <controls:Loading x:Name="KeyboardSpinner" Text="Fetching keyboards..." />
+        </Grid>
+        <Grid>
+            <StackPanel Padding="10" x:Name="KeyboardInfoPanel" Opacity=".5">
+                <TextBox Header="Keyboard name:" Text="{x:Bind KeyboardInfo.KeyboardName, Mode=OneWay}" IsReadOnly="True" />
+                <TextBox Header="Maintainer:" Text="{x:Bind KeyboardInfo.Maintainer, Mode=OneWay}" IsReadOnly="True" />
+                <TextBox Header="Manufacturer:" Text="{x:Bind KeyboardInfo.Manufacturer, Mode=OneWay}" IsReadOnly="True" />
+
+                <tc:HeaderedContentControl Header="Readme:" HorizontalContentAlignment="Stretch" Visibility="Collapsed">
+                    <ScrollViewer Height="400" BorderBrush="#FFB0B0B0" BorderThickness="1" HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled" Padding="20">
+                        <tc:MarkdownTextBlock x:Name="KeyboardReadme" Background="{x:Null}">
+                        </tc:MarkdownTextBlock>
+                    </ScrollViewer>
+                </tc:HeaderedContentControl>
+
+            </StackPanel>
+            <controls:Loading x:Name="KeyboardInfoSpinner" Text="Fetching keyboard info..." />
+        </Grid>
+
+        <tc:HeaderedContentControl Header="Layout:" HorizontalContentAlignment="Stretch">
+            <ComboBox PlaceholderText="Select a layout..." 
+                          IsEditable="False" 
+                          x:Name="LayoutPicker"
+                          HorizontalAlignment="Stretch"
+                          SelectionChanged="LayoutPicker_OnSelectionChanged"
+                          ItemsSource="{x:Bind Layouts, Mode=OneWay}" />
+        </tc:HeaderedContentControl>
+
+        <tc:HeaderedContentControl Header="Keymap:" HorizontalContentAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="KeyMapPicker" 
+                                  PlaceholderText="Select a key map..." 
+                                  IsEditable="False" 
+                                  HorizontalAlignment="Stretch" 
+                                  SelectionChanged="KeyMapPicker_OnSelectionChanged"
+                                  ItemsSource="{x:Bind KeyMaps, Mode=OneWay}">
+                    <!--<ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:KeyMap">
+                                <TextBlock Text="{Binding Keymap}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>-->
+                </ComboBox>
+                <Button Grid.Column="1" 
+                            Content="Load from file..." 
+                            Padding="10, 0"
+                            Margin="10, 0, 0 ,0"
+                            VerticalAlignment="Stretch"
+                            Style="{StaticResource ButtonRevealStyle}"
+                            Tapped="ImportKeyMapButton_OnTapped" />
+
+            </Grid>
+        </tc:HeaderedContentControl>
+    </StackPanel>
+</ContentDialog>

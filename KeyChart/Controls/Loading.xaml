@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="KeyChart.Controls.Loading"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KeyChart.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tc="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <tc:Loading x:Name="InnerLoading" IsLoading="{x:Bind IsLoading, Mode=TwoWay}">
+
+        <StackPanel Orientation="Horizontal" Padding="{x:Bind Padding, Mode=OneWay}">
+            <ProgressRing IsActive="True" Margin="0,0,12,0" Foreground="{ThemeResource TextSelectionHighlightColorThemeBrush}" />
+            <TextBlock Text="{x:Bind Text}" FontSize="{x:Bind FontSize, Mode=OneWay}" VerticalAlignment="Center" Foreground="{x:Bind Foreground, Mode=OneWay}" />
+        </StackPanel>
+
+        <tc:Loading.Background>
+            <media:AcrylicBrush BackgroundSource="Backdrop"
+                                    TintColor="Black"
+                                    TintOpacity="0.4"
+                                    BlurAmount="8"/>
+        </tc:Loading.Background>
+
+    </tc:Loading>
+</UserControl>

@@ -1,0 +1,8 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:app="clr-namespace:KeyboardCheatSheet">
+    <app:LayerCollection x:Name="Layers">
+        <app:Layer Name="Layer 0" Index="0" Slug="L0" />
+        <app:Layer Name="Layer 1" Index="1" Slug="L1" />
+        <app:Layer Name="Layer 2" Index="2" Slug="L2" />
+    </app:LayerCollection>
+</UserControl>
