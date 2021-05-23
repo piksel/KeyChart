@@ -1,0 +1,6 @@
+﻿RegisterHotKey
+UnregisterHotKey
+FindWindow
+SendMessage
+ShowWindow
+AnimateWindow 

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json.Serialization;
+using FA = KeyChart.Keyboards.FontAwesome.Symbol;
 
+#nullable enable
 
 namespace KeyChart.Keyboards
 {
@@ -27,7 +29,7 @@ namespace KeyChart.Keyboards
             get => Symbol ? Text : null;
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (value is null or "")
                 {
                     Symbol = false;
                 }
@@ -45,7 +47,7 @@ namespace KeyChart.Keyboards
             get => Symbol ? null : Text;
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (value is null or "")
                 {
                     Symbol = true;
                 }
@@ -65,21 +67,13 @@ namespace KeyChart.Keyboards
                 kc = kc.Substring(3);
             }
 
-            if (keyNames.ContainsKey(kc))
-            {
-                return keyNames[kc];
-            }
-            else
-            {
-                // Debug.WriteLine($" Missing Keycode: \"{kc}\" ");
-                return new(kc, false);
-            }
+            return keyNames.ContainsKey(kc) ? keyNames[kc] : new KeyLabel(kc, false);
         }
     
 
         private static readonly Dictionary<string, KeyLabel> keyNames = new ()
         {
-            {"TRNS",new( " ",false)},
+            {"TRNS",KeyLabel.TextLabel(" ")},
             {"TAB", new( "", true)},
             {"ESC", new("Esc", false)},
             {"CTRL", new( "Ctrl", false)},
@@ -137,9 +131,9 @@ namespace KeyChart.Keyboards
           { "LBRC", new("LBRC", false)},
           { "RBRC", new("RBRC", false)},
 
-          { "MUTE", new( "", true)},
-          { "VOLU", new( "", true)},
-          { "VOLD", new( "", true)},
+          { "MUTE", new( FA.VolumeOff, true)},
+          { "VOLU", new( FA.VolumeHigh, true)},
+          { "VOLD", new( FA.VolumeLow, true)},
 
           { "MO(3)", new("Lower", false)},
           { "MO(4)", new("Raise", false)},
@@ -167,7 +161,7 @@ namespace KeyChart.Keyboards
           { "END", new("End", false)},
           { "SCLN", new(";", false)},
 
-          { "UP", new("", true)},
+          { "UP", new(FA.ArrowUp, true)},
           { "LEFT", new("", true)},
           { "DOWN", new("", true)},
           {"RGHT", new( "", true)},
@@ -176,5 +170,19 @@ namespace KeyChart.Keyboards
           { "LCTL", new("Ctrl", false)},
           { "SPC", new("Space", false)},
         };
+
+        private static KeyLabel TextLabel(string text)
+            => new ()
+            {
+                Symbol = false,
+                Text = text,
+            };
+        
+        private static KeyLabel SymbolLabel(string text)
+            => new ()
+            {
+                Symbol = false,
+                Text = text,
+            };
     }
 }

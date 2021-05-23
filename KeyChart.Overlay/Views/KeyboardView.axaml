@@ -1,0 +1,61 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:design="clr-namespace:KeyChart.Avalonia.Design"
+             xmlns:keyboards="clr-namespace:KeyChart.Keyboards;assembly=KeyChart.Keyboards"
+             xmlns:appc="clr-namespace:KeyChart.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             d:DataContext="{x:Static design:DesignData.KeyboardViewModel}"
+             x:Class="KeyChart.Avalonia.Views.KeyboardView">
+    <UserControl.Styles>
+        <!-- <Style Selector="ItemsControl > ContentPresenter" x:DataType="keyboards:Key"> -->
+        <!--     <Setter Property="Canvas.Top" Value="{Binding Bounds.Top}" /> -->
+        <!-- </Style> -->
+    </UserControl.Styles>
+
+    <Grid>
+    <Viewbox Stretch="Uniform" IsVisible="{Binding KeyboardSelected}">
+        <Border Padding="10" CornerRadius="10" Background="#d0000000">
+            <ItemsControl Items="{Binding Layout}" 
+                          Name="KeyItemsControl"
+                          Width="{Binding Width, Mode=OneWay}" 
+                          Height="{Binding Height, Mode=OneWay}">
+                <ItemsControl.Styles>
+                    <Style Selector="#KeyItemsControl > ContentPresenter" x:DataType="keyboards:Key">
+                        <Setter Property="Canvas.Top" Value="{Binding Bounds.Top, Mode=OneWay}" />
+                        <Setter Property="Canvas.Left" Value="{Binding Bounds.Left, Mode=OneWay}" />
+                    </Style>
+                </ItemsControl.Styles>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="keyboards:Key">
+                        <Border Width="{Binding Width}" Height="{Binding Height}">
+                            <appc:ChartKey />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Viewbox>
+        <Border IsVisible="{Binding !KeyboardSelected}" 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="10"
+                Margin="0"
+                >
+            <StackPanel>
+            <TextBlock Text="No keyboard selected..." Foreground="White" FontSize="16" />
+            <Button Content="Load!" Margin="0, 10, 0, 0" HorizontalAlignment="Center" 
+                    Click="Button_OnClick"
+                    Name="LoadButton"
+                    
+                    />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

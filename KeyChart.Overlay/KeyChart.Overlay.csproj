@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <AssemblyName>KeyChart.Avalonia</AssemblyName>
+        <RootNamespace>KeyChart.Avalonia</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.5" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.5" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.5" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.5" />
+        <PackageReference Include="Avalonia.Win32" Version="0.10.5" />
+        <PackageReference Include="PkgSrc.Nuke.Paths" Version="5.102.2" />
+        <PackageReference Include="ReactiveUI" Version="13.2.10" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Views\KeyboardView.axaml.cs">
+        <DependentUpon>KeyboardView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\KeyChart.Keyboards\KeyChart.Keyboards.csproj" />
+      <ProjectReference Include="..\KeyChart.Services\KeyChart.Services.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+</Project>

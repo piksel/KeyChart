@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using KeyChart.Services;
+using Microsoft.Windows.Sdk;
 using Action = KeyChart.Services.HotkeyService.HotkeyAction;
 
 namespace KeyChart.HotkeyHelper
@@ -23,7 +24,7 @@ namespace KeyChart.HotkeyHelper
 
         public void RegisterCombo(HotkeyService.HotkeyAction action, KeyModifiers modifiers, Keys vlc)
         {
-            if (Winterop.RegisterHotKey(Handle, (int)action, (int)modifiers, (int)vlc))
+            if (PInvoke.RegisterHotKey((HWND)Handle, (int)action, (RegisterHotKey_fsModifiersFlags)(int)modifiers, (uint)vlc))
             {
                 _registeredActions.Add(action);
             }
@@ -40,7 +41,7 @@ namespace KeyChart.HotkeyHelper
                 case Winterop.WM_DESTROY: //unregister all hot keys
                     foreach (var action in _registeredActions)
                     {
-                        Winterop.UnregisterHotKey(Handle, (int)action);
+                        PInvoke.UnregisterHotKey((HWND)Handle, (int)action);
                     }
                     break;
             }

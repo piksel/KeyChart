@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KeyChart.Keyboards.FontAwesome;
 using KeyChart.Keyboards.QMK;
 
 namespace KeyChart.Keyboards
@@ -16,6 +17,19 @@ namespace KeyChart.Keyboards
             SecondaryLayerStyle(4, 3),
         };
 
+        public static KeyboardInfo KeyboardInfo = new()
+        {
+            KeyboardName = "Mock Keyboard",
+            Maintainer = "Maintainer Man",
+            Manufacturer = "Acme Keyboards Inc.",
+            Bootloader = "ntldr",
+            Features = Features.All,
+            Layouts = new() {{"LAYOUT", new()}},
+            Url = "https://lmgtfy.com/q=?how+to+keyboard",
+            ProcessorType = "IA-64",
+            Processor = "Itanium 9760"
+        };
+
         public static LayerStyle SecondaryLayerStyle(int layer, int styleIndex)
         {
             var (color, position) = LayerStyle.SecondaryStyles[styleIndex];
@@ -24,7 +38,7 @@ namespace KeyChart.Keyboards
 
         public static KeyLayer[] KeyLayers = {
             new() {Text = "Key", LayerStyle = LayerStyles[0]},
-            new() {Text = "", Symbol = true, LayerStyle = LayerStyles[1]},
+            new() {Text = Symbol.Alien, Symbol = true, LayerStyle = LayerStyles[1]},
             new() {Text = "5", LayerStyle = LayerStyles[2]},
             new() {Text = "F", LayerStyle = LayerStyles[3]},
             new() {Text = "Del", LayerStyle = LayerStyles[4]},
@@ -36,11 +50,14 @@ namespace KeyChart.Keyboards
                 .Select((pos, index) => new Key(index, pos.col, pos.row, 1, new KeyLayer[]
                 {
                     new() { Text = $"{index}", LayerStyle = LayerStyles[0] },
-                    new() { Text = "TL", LayerStyle = LayerStyles[1] },
+                    new() { Text = Symbol.Socks, Symbol = true, LayerStyle = LayerStyles[1] },
                     new() { Text = $"{pos.row}", LayerStyle = LayerStyles[2] },
                     new() { Text = "BR", LayerStyle = LayerStyles[3] },
                     new() { Text = $"{pos.col}", LayerStyle = LayerStyles[4] },
                 }));
+
+        public static KeyMap KeyMap(int index = 0)
+            => new() { Keymap = $"mock_keyboard_keymap_{index}" };
     }
 
     public class MockKey : Key

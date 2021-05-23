@@ -15,23 +15,8 @@ namespace KeyChart.Design
         public DesignKeyboardModel(int i)
         {
             Name = $"Mock keyboard {i}";
-            Info = new KeyboardInfo()
-            {
-                KeyboardName = "Mock Keyboard",
-                Maintainer = "Maintainer Man",
-                Manufacturer = "Acme Keyboards Inc.",
-                Bootloader = "ntldr",
-                Features = Features.All,
-                Layouts = new() {{"LAYOUT", new()}},
-                Url = "https://lmgtfy.com/q=?how+to+keyboard",
-                ProcessorType = "IA-64",
-                Processor = "Itanium 9760"
-            };
-            KeyMap = new()
-            {
-                Keymap = $"mock_keyboard_keymap_{i}",
-
-            };
+            Info = KeyboardMocks.KeyboardInfo;
+            KeyMap = KeyboardMocks.KeyMap(i);
             LayerStyles = MockLayerStyles;
         }
     }

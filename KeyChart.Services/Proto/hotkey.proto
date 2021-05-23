@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "KeyChart.Services";
+
+package hotkey;
+
+service HotkeyService {
+  rpc ShowWindow (ShowWindowArgs) returns (ShowWindowResult);
+}
+
+message ShowWindowArgs {
+  bool FullScreen = 1;
+  sint32 DisplayNum = 2;
+}
+
+message ShowWindowResult {
+  bool OK = 1;
+}

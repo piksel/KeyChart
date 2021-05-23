@@ -2,7 +2,7 @@
 
 namespace KeyChart.Services
 {
-    public static class HotkeyService
+    public partial class HotkeyService
     {
         public static readonly string Name = nameof(HotkeyService);
 
@@ -11,5 +11,7 @@ namespace KeyChart.Services
             ShowOverlay = 1001,
             ShowApp = 1002
         }
+
+        public static readonly string Address = "http://localhost:38429";
     }
 }
