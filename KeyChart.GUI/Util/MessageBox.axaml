@@ -1,0 +1,52 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fontAwesome="clr-namespace:KeyChart.Keyboards.FontAwesome;assembly=KeyChart.Keyboards"
+        mc:Ignorable="d"
+        x:Class="KeyChart.GUI.Util.MessageBox"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        CanResize="False"
+        Name="Dialog"
+        WindowStartupLocation="CenterOwner"
+        SystemDecorations="BorderOnly"
+        Width="400"
+        Height="200"
+        d:DesignWidth="400" d:DesignHeight="200"
+        Title="MessageBox">
+    <Panel Margin="{Binding #Dialog.OffScreenMargin}">
+        <DockPanel>
+            <Border IsHitTestVisible="False" Background="#d0000000" 
+                    DockPanel.Dock="Top" MinHeight="30"
+                    CornerRadius="10, 10, 0, 0">
+                <TextBlock Name="TitleText" 
+                           Text="{Binding #Dialog.Title}" VerticalAlignment="Center"
+                           Margin="10"/>
+            </Border>
+            <Panel DockPanel.Dock="Bottom"  Background="#d0000000">
+                <Button 
+                    Margin="10"
+                    HorizontalAlignment="Center" Padding="20, 10"
+                    Click="Button_OnClick"
+                >OK</Button>
+            </Panel>
+            <Border CornerRadius="0, 0, 10, 10"  Background="#d0000000">
+                <DockPanel>
+                    <Panel DockPanel.Dock="Right">
+                        <TextBlock Classes="Symbol" 
+                                   FontSize="100"
+                                   Opacity=".1"
+                                   Padding="10, 0"
+                                   Text="{x:Static fontAwesome:Symbol.FaceGrinBeamSweat}" />
+                    </Panel>
+                    <Border Padding="20">
+                        <TextBlock Name="MessageText" Text="{Binding #Dialog.Message}" />
+                    </Border>
+                </DockPanel>
+            </Border>
+        </DockPanel>
+    </Panel>
+</Window>

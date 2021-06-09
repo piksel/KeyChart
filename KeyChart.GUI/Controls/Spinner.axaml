@@ -1,0 +1,70 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
+             x:Class="KeyChart.GUI.Controls.Spinner">
+    <UserControl.Styles>
+        <Style Selector="Grid.spinner">
+            <Setter Property="Height" Value="500"/>
+            <Setter Property="Width" Value="500"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Animations>
+                <Animation Duration="0:0:10" IterationCount="Infinite"> 
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0.0"/>
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360.0"/>
+                    </KeyFrame>
+                </Animation>
+                
+            </Style.Animations>
+            
+        </Style>
+        <Style Selector="Grid.spinner ConicGradientBrush"></Style>
+    </UserControl.Styles>
+    <Grid Classes="spinner">
+        <Border CornerRadius="250" Margin="10"
+                Classes="spinnerz"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                BorderThickness="40"
+        >
+            <Border.RenderTransform>
+                <RotateTransform Angle="5"></RotateTransform>
+            </Border.RenderTransform>
+            <Border.BorderBrush>
+                <ConicGradientBrush>
+                    
+                    <GradientStop Color="#008000ff" Offset="0" />
+                    <GradientStop Color="#008000ff" Offset=".1" />
+                    <GradientStop Color="#ff8000ff" Offset="1" />
+                </ConicGradientBrush>
+                
+            </Border.BorderBrush>
+            
+        </Border>
+        <Ellipse Fill="#ffc080ff" Height="40" Width="40" HorizontalAlignment="Center" VerticalAlignment="Top"
+                 Margin="10"
+                 >
+            <Ellipse.RenderTransform>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+    <!--     <Ellipse Canvas.Top="0"  -->
+    <!--           -->
+    <!--              Canvas.Left="0" -->
+    <!--           -->
+    <!--              HorizontalAlignment="Stretch" -->
+    <!--              VerticalAlignment="Stretch" -->
+    <!--              Fill="Magenta" /> -->
+    <!-- <Ellipse  -->
+    <!--     Canvas.Top="10" -->
+    <!--     Canvas.Left="10" -->
+    <!--     Canvas.Bottom="10" -->
+    <!--     Canvas.Right="10" -->
+    <!--     Margin="10" -->
+    <!--     Fill="Black" /> -->
+    
+    </Grid>
+</UserControl>

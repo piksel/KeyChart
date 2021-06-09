@@ -1,0 +1,82 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:controls="using:KeyChart.GUI.Controls">
+    <Design.PreviewWith>
+        <controls:LoadingIndicator Foreground="Orange" PrimaryColor="Orange" Message="Hello!" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|LoadingIndicator">
+        <Setter Property="Foreground" Value="{TemplateBinding Foreground}" />
+        <Setter Property="Background" Value="Green" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="120" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="ClipToBounds" Value="True" />
+
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+
+                    <Grid Classes="spinner" Width="120" Height="120">
+                    <Border CornerRadius="60" Margin="10"
+                            Classes="spinnerz"
+                            Name="Circle"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderThickness="10"
+                            BorderBrush="{TemplateBinding CircleBrush}"
+                    >
+                        <Border.RenderTransform>
+                            <RotateTransform Angle="5"></RotateTransform>
+                        </Border.RenderTransform>
+                        
+                    </Border>
+                    <Ellipse Fill="{TemplateBinding Foreground}" 
+                             
+                             Height="10" 
+                             Width="10" 
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Top"
+                             Margin="10"
+                    >
+                    </Ellipse>
+                    <Ellipse Fill="#c0ffffff" 
+                             Opacity="1"
+                             Height="8" 
+                             Width="8" 
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Top"
+                             Margin="11"
+                    >
+                    </Ellipse>
+                </Grid>
+
+                    <TextBlock Name="MessageText" Text="{TemplateBinding Message}" ></TextBlock>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="controls|LoadingIndicator /template/ Grid.spinner">
+        <Setter Property="Background" Value="Transparent"/>
+        <Style.Animations>
+            <Animation Duration="0:0:4" IterationCount="Infinite"> 
+                <KeyFrame Cue="0%">       
+                    <Setter Property="RotateTransform.Angle" Value="0.0"/>
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="RotateTransform.Angle" Value="360.0"/>
+                </KeyFrame>
+            </Animation>
+                
+        </Style.Animations>
+            
+    </Style>
+    <Style Selector="controls|LoadingIndicator /template/ TextBlock#MessageText">
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+</Styles>

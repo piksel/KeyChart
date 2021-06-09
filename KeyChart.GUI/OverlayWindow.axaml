@@ -1,0 +1,30 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:KeyChart.GUI.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome"
+        x:Class="KeyChart.GUI.OverlayWindow"
+        KeyUp="InputElement_OnKeyUp"
+        ShowInTaskbar="False"
+        Title="OverlayWindow">
+
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0%,100%">
+                <GradientStop Color="#ff000000" Offset="0" />
+                <GradientStop Color="#80000000" Offset=".1" />
+                <GradientStop Color="#80000000" Offset=".9" />
+                <GradientStop Color="#ff000000" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+        
+        <Panel MaxWidth="1000">
+        <views:KeyboardView DataContext="{Binding }" />
+    </Panel>
+    </Border>
+</Window>

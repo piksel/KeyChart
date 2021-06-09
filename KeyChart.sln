@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChart.WPF", "KeyChart.WPF\KeyChart.WPF.csproj", "{5A200202-B3BF-4BD2-BE34-5F4AE2F282FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChart.UWP", "KeyChart\KeyChart.UWP.csproj", "{48057740-DC3A-466E-97FC-2AEC26E05735}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChart.UWP", "KeyChart.UWP\KeyChart.UWP.csproj", "{48057740-DC3A-466E-97FC-2AEC26E05735}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piksel.UWP", "Piksel.UWP\Piksel.UWP.csproj", "{75BFEBB8-9A6F-4842-BE72-EADFCF3AF915}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyChart.Keyboards", "KeyCh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Piksel.UWP", "Piksel.UWP", "{8D2E1A2F-EA40-4091-97F6-9885DDBF4168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChart.Overlay", "KeyChart.Overlay\KeyChart.Overlay.csproj", "{1886BF49-8C72-4397-871F-E641174F0907}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyChart.Overlay", "KeyChart.GUI\KeyChart.GUI.csproj", "{1886BF49-8C72-4397-871F-E641174F0907}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaTest", "AvaloniaTest\AvaloniaTest.csproj", "{AEEA1C25-3777-4EC3-99C9-212366BC0F9A}"
 EndProject

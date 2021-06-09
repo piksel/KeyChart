@@ -1,0 +1,21 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:pu="clr-namespace:KeyChart.GUI.Platforms"
+             x:Class="KeyChart.GUI.App">
+    <Application.Styles>
+        <FluentTheme Mode="Dark"/>
+        <StyleInclude Source="/Styles.axaml" />
+        <StyleInclude Source="/Controls/LoadingIndicator.axaml" />
+    </Application.Styles>
+    <!-- <pu:NotifyIcon.Icon> -->
+    <!--     avares://KeyChart/Assets/icon.ico -->
+    <!-- </pu:NotifyIcon.Icon> -->
+    <!-- <pu:NotifyIcon.Menu> -->
+    <!--     <ContextMenu> -->
+    <!--         <MenuItem Header="Show main window" pu:NotifyIcon.IsDefault="True" /> -->
+    <!--         <MenuItem Header="Show overlay" HotKey="Ctrl+Pause" /> -->
+    <!--         <Separator /> -->
+    <!--         <MenuItem Header="Exit" Command="{Binding}" /> -->
+    <!--     </ContextMenu> -->
+    <!-- </pu:NotifyIcon.Menu> -->
+</Application>

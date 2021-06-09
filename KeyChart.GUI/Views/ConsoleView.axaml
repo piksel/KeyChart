@@ -1,0 +1,76 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:KeyChart.GUI.Views"
+             xmlns:design="clr-namespace:KeyChart.GUI.Design"
+             xmlns:util="clr-namespace:KeyChart.GUI.Util"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200"
+             d:DataContext="{x:Static design:DesignData.ConsoleViewModel}"
+             x:Class="KeyChart.GUI.Views.ConsoleView">
+    <UserControl.Styles>
+        <Style Selector="#Lines TextBlock">
+            <Setter Property="FontFamily" Value="Consolas" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Gray">
+            <Setter Property="Foreground" Value="#b0ffffff" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Red">
+            <Setter Property="Foreground" Value="red" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Green">
+            <Setter Property="Foreground" Value="#50D923" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Yellow">
+            <Setter Property="Foreground" Value="#FFFC4D" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Cyan">
+            <Setter Property="Foreground" Value="#2EC7FF" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Blue">
+            <Setter Property="Foreground" Value="#3D27FF" />
+        </Style>
+        <Style Selector="#Lines TextBlock.Magenta">
+            <Setter Property="Foreground" Value="#D91E87" />
+        </Style>
+        <Style Selector="#Lines TextBlock.White">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Styles>
+    <Border Background="#d0000000" CornerRadius="10" Padding="10">
+        <ScrollViewer VerticalContentAlignment="Bottom" 
+
+                      ScrollChanged="Scroller_OnScrollChanged"
+                      Name="Scroller">
+            <ItemsControl Items="{Binding Lines}" 
+                          PropertyChanged="Lines_OnPropertyChanged"
+                          Name="Lines" VerticalAlignment="Bottom">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="local:ConsoleRow">
+                        <ItemsRepeater Items="{Binding Spans}">
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="4"/>
+                            </ItemsRepeater.Layout>
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate DataType="local:TextSpan">
+                                    <TextBlock Text="{Binding Text}"
+                                               Classes.Gray="{Binding Gray}"
+                                               Classes.Red="{Binding Red}"
+                                               Classes.Green="{Binding Green}"
+                                               Classes.Yellow="{Binding Yellow}"
+                                               Classes.Blue="{Binding Blue}"
+                                               Classes.Cyan="{Binding Cyan}"
+                                               Classes.Magenta="{Binding Magenta}"
+                                               Classes.White="{Binding White}"
+
+                                    />
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>    
+        </ScrollViewer>
+    </Border>
+</UserControl>

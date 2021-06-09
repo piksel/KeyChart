@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="KeyChart.GUI/App.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Controls/ChartKey.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Controls/LoadingIndicator.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Controls/Spinner.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/MainWindow.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/OverlayWindow.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Styles.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Util/MessageBox.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/ConsoleView.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/KeyboardView.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.Overlay/App.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+        <entry key="KeyChart.Overlay/Controls/ChartKey.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+        <entry key="KeyChart.Overlay/MainWindow.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+        <entry key="KeyChart.Overlay/OverlayWindow.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+        <entry key="KeyChart.Overlay/Styles.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+        <entry key="KeyChart.Overlay/Views/KeyboardView.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
