@@ -377,7 +377,7 @@ namespace KeyChart.GUI.Platforms.Windows
     /// <summary>
     /// Disposes the class if the application exits.
     /// </summary>
-    private void OnExit(object sender, EventArgs e)
+    private void OnExit(object? sender, EventArgs e)
     {
       Dispose();
     }

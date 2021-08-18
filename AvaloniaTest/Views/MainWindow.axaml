@@ -7,11 +7,21 @@
         x:Class="AvaloniaTest.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaTest">
-
+    <Window.Styles>
+        <Style Selector="TextBlock.StyledText">
+            <Setter Property="Text" Value="SetFromStyle" />
+        </Style>
+        <Style Selector="TextBlock#HighlightText">
+            <Setter Property="Background" Value="Red" />
+        </Style>
+    </Window.Styles>
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Background="#00ff00" Text="{Binding Greeting}" />
+        <TextBlock Text="Text without binding" MinHeight="20" />
+        <TextBlock Classes="StyledText" Text="TextBlock with class" />
+        <TextBlock Name="HighlightText" Text="Text with name" MinHeight="20" />
+    </StackPanel>
 </Window>

@@ -49,7 +49,7 @@ namespace KeyChart.GUI.Util
         public static extern IntPtr CreateWindowEx(
             int dwExStyle,
             uint lpClassName,
-            string lpWindowName,
+            string? lpWindowName,
             uint dwStyle,
             int x,
             int y,

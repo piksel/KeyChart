@@ -34,7 +34,7 @@ namespace KeyChart.GUI.Views
 
         private void Scroller_OnScrollChanged(object? sender, ScrollChangedEventArgs e)
         {
-            Debug.WriteLine($"Extent: {e.ExtentDelta}, ViewPort: {e.ViewportDelta}, {e.OffsetDelta}");
+            // Debug.WriteLine($"Extent: {e.ExtentDelta}, ViewPort: {e.ViewportDelta}, {e.OffsetDelta}");
             if(e.ExtentDelta.Y >= double.Epsilon)
                 Scroller.ScrollToEnd();
         }
@@ -44,12 +44,14 @@ namespace KeyChart.GUI.Views
     {
         public AvaloniaList<ConsoleRow> Lines { get; set; } = new();
 
+        public int MaxLines { get; } = 300;
+
         public void AddLine(string text)
             => Lines.Add(new ConsoleRow(text));
         
         public void AddLine(params TextSpan[] spans)
         {
-            if (Lines.Count > 50)
+            if (Lines.Count > MaxLines)
             {
                 Lines.RemoveAt(0);
             }

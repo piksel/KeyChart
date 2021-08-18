@@ -14,6 +14,7 @@ namespace KeyChart.GUI.Platforms.Windows.Winterop
         public PopupMenu(IntPtr ownerWindow)
         {
             ownerHandle = ownerWindow;
+            MenuItems = new List<PopupMenuItem>();
         }
         
         private IntPtr menuHandle;

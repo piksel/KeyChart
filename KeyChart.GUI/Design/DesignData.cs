@@ -44,6 +44,8 @@ namespace KeyChart.GUI.Design
         };
 
         public static MockKey ChartKeyModel = new();
+        public static MockKey ChartKeyBottomLeft = new(LabelPosition.BottomLeft);
+        public static MockKey ChartKeyBottomRight = new(LabelPosition.BottomRight);
 
         public static MainWindowViewModel MainWindowViewModelLoading = new()
         {

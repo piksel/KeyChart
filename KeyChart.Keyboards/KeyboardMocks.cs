@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using KeyChart.Keyboards.FontAwesome;
 using KeyChart.Keyboards.QMK;
+using Piksel.TextSymbols;
 
 namespace KeyChart.Keyboards
 {
@@ -38,7 +36,7 @@ namespace KeyChart.Keyboards
 
         public static KeyLayer[] KeyLayers = {
             new() {Text = "Key", LayerStyle = LayerStyles[0]},
-            new() {Text = Symbol.Alien, Symbol = true, LayerStyle = LayerStyles[1]},
+            new(Fa6.Alien) {LayerStyle = LayerStyles[1]},
             new() {Text = "5", LayerStyle = LayerStyles[2]},
             new() {Text = "F", LayerStyle = LayerStyles[3]},
             new() {Text = "Del", LayerStyle = LayerStyles[4]},
@@ -50,11 +48,11 @@ namespace KeyChart.Keyboards
                 .Select((pos, index) => new Key(index, pos.col, pos.row, 1, new KeyLayer[]
                 {
                     new() { Text = $"{index}", LayerStyle = LayerStyles[0] },
-                    new() { Text = Symbol.Socks, Symbol = true, LayerStyle = LayerStyles[1] },
+                    new(Fa6.Socks) { LayerStyle = LayerStyles[1] },
                     new() { Text = $"{pos.row}", LayerStyle = LayerStyles[2] },
                     new() { Text = "BR", LayerStyle = LayerStyles[3] },
                     new() { Text = $"{pos.col}", LayerStyle = LayerStyles[4] },
-                }));
+                }, ((byte)pos.col, (byte)pos.row)));
 
         public static KeyMap KeyMap(int index = 0)
             => new() { Keymap = $"mock_keyboard_keymap_{index}" };
@@ -62,6 +60,17 @@ namespace KeyChart.Keyboards
 
     public class MockKey : Key
     {
-        public MockKey() : base(0, 0, 0, 1, KeyboardMocks.KeyLayers) { }
+        public MockKey(LabelPosition? targetLayer = null) : base(0, 0, 0, 1, KeyboardMocks.KeyLayers, (0, 0))
+        {
+            if (targetLayer is null) return;
+            var mockC = KeyboardMocks.KeyLayers[2];
+            LayerC = new KeyLayer
+            {
+                Symbol = mockC.Symbol,
+                Text = mockC.Text,
+                LayerStyle = mockC.LayerStyle,
+                TargetLayer = targetLayer,
+            };
+        }
     }
 }

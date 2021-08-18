@@ -23,7 +23,7 @@ namespace KeyChart.Keyboards
 
             foreach (var kc in keymap.Layers.SelectMany(layerKeys => layerKeys))
             {
-                if (!QMK.KeyCodes.IsLayerKey(kc, out var layerKey)) continue;
+                if (QMK.KeyCodes.AsLayerKey(kc) is not {} layerKey) continue;
                 if (layerKey.Layer < 0 || layerKey.Layer >= layerCount) continue;
 
                 var layerStyle = layerStyles[layerKey.Layer];
@@ -38,6 +38,7 @@ namespace KeyChart.Keyboards
                 layerStyle.Display = !layerStyle.BaseLayer || layerKey.Layer == 0;
             }
 
+            
             var toggleLabelCount = 0;
             foreach (var layerStyle in layerStyles)
             {
@@ -48,7 +49,7 @@ namespace KeyChart.Keyboards
                 }
 
                 if (!layerStyle.Display) continue;
-                
+
                 // Set the label style to the next in loop
                 (layerStyle.Color, layerStyle.Position) = LayerStyle.SecondaryStyles[toggleLabelCount++ % 4];
 
@@ -56,12 +57,18 @@ namespace KeyChart.Keyboards
                 layerStyle.Display = toggleLabelCount <= 4;
             }
 
+            var kbd = new KeyboardModel { KeyMap = keymap, Info = keyboardInfo, LayerStyles = layerStyles };
+            
+            kbd.UpdateKeyLabels();
+            
+            return kbd;
+        }
 
+        public void UpdateKeyLabels()
+        {
             // Resolve all keycodes into key labels
-            var layerKeyLabels = keymap.Layers
+            LayerKeyLabels = KeyMap.Layers
                 .Select(layer => layer.Select(KeyLabel.FromKeycode).ToList()).ToList();
-
-            return new KeyboardModel() { KeyMap = keymap, Info = keyboardInfo, LayerStyles = layerStyles, LayerKeyLabels = layerKeyLabels };
         }
 
         public async Task BuildKeyLayout()
@@ -81,6 +88,8 @@ namespace KeyChart.Keyboards
                     return keyLayout;
                 }
 
+                var primaryLayer = LayerStyles.FirstOrDefault(ls => ls.Display && ls.BaseLayer);
+
                 for (var i = 0; i < keysCount; i++)
                 {
                     
@@ -88,11 +97,23 @@ namespace KeyChart.Keyboards
                     var layers = LayerKeyLabels
                         .Select(keyLabels => keyLabels[i])
                         .Zip(LayerStyles,
-                            (label, layerSettings) => new KeyLayer() {LayerStyle = layerSettings, Text = label.Text, Symbol = label.Symbol})
+                            (label, layerSettings) => new KeyLayer
+                            {
+                                LayerStyle = layerSettings, 
+                                Text = label.Text, 
+                                Symbol = label.Symbol,
+                                TargetLayer = label.TargetLayer is {} i ? LayerStyles[i].Position : null, 
+                            })
                         .ToArray();
 
-
-                    keyLayout.Add(new Key(i, key.X, key.Y, key.W, layers));
+                    // if (QMK.KeyCodes.AsLayerKey(KeyMap.Layers[primaryLayer.Index][i]) is { } layerKey)
+                    // {
+                    //     layerKey.Mode == QMK.LayerKeyMode.MomentaryActivation
+                    // }
+                    var lkey = new Key(i, key.X, key.Y, key.W, layers, key.Matrix);
+                    
+                    
+                    keyLayout.Add(lkey);
                 }
 
                 return keyLayout;

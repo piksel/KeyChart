@@ -2,11 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:fontAwesome="clr-namespace:KeyChart.Keyboards.FontAwesome;assembly=KeyChart.Keyboards"
+        xmlns:util="clr-namespace:KeyChart.GUI.Util"
         mc:Ignorable="d"
         x:Class="KeyChart.GUI.Util.MessageBox"
         TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="PreferSystemChrome"
         CanResize="False"
@@ -15,9 +14,17 @@
         SystemDecorations="BorderOnly"
         Width="400"
         Height="200"
-        d:DesignWidth="400" d:DesignHeight="200"
+        d:DesignWidth="600" d:DesignHeight="400"
         Title="MessageBox">
-    <Panel Margin="{Binding #Dialog.OffScreenMargin}">
+    <Window.Background>
+        <SolidColorBrush Color="Transparent" />
+        <!-- <RadialGradientBrush SpreadMethod="Repeat" Radius=".4"> -->
+        <!--     <GradientStop Offset="0" Color="#ff000000" /> -->
+        <!--     <GradientStop Offset=".5" Color="#80000000" /> -->
+        <!--     <GradientStop Offset="1" Color="#00000000" /> -->
+        <!-- </RadialGradientBrush> -->
+    </Window.Background>
+    <Border Margin="{Binding #Dialog.OffScreenMargin}" Width="400" Height="200" Name="Content">
         <DockPanel>
             <Border IsHitTestVisible="False" Background="#d0000000" 
                     DockPanel.Dock="Top" MinHeight="30"
@@ -26,27 +33,29 @@
                            Text="{Binding #Dialog.Title}" VerticalAlignment="Center"
                            Margin="10"/>
             </Border>
-            <Panel DockPanel.Dock="Bottom"  Background="#d0000000">
+            <Border CornerRadius="0, 0, 10, 10"  Background="#d0000000" DockPanel.Dock="Bottom">
                 <Button 
                     Margin="10"
                     HorizontalAlignment="Center" Padding="20, 10"
                     Click="Button_OnClick"
                 >OK</Button>
-            </Panel>
-            <Border CornerRadius="0, 0, 10, 10"  Background="#d0000000">
+            </Border>
+            <Border Background="#d0000000">
                 <DockPanel>
                     <Panel DockPanel.Dock="Right">
                         <TextBlock Classes="Symbol" 
                                    FontSize="100"
                                    Opacity=".1"
                                    Padding="10, 0"
-                                   Text="{x:Static fontAwesome:Symbol.FaceGrinBeamSweat}" />
+                                   Text="{util:TextSymbolText FaceGrinBeamSweat}" />
                     </Panel>
                     <Border Padding="20">
-                        <TextBlock Name="MessageText" Text="{Binding #Dialog.Message}" />
+                        <TextBlock Name="MessageText" 
+                                   TextWrapping="Wrap"
+                                   Text="{Binding #Dialog.Message}" />
                     </Border>
                 </DockPanel>
             </Border>
         </DockPanel>
-    </Panel>
+    </Border>
 </Window>

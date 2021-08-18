@@ -6,38 +6,192 @@
              xmlns:keyboards="clr-namespace:KeyChart.Keyboards;assembly=KeyChart.Keyboards"
              xmlns:util="clr-namespace:KeyChart.GUI.Util"
              mc:Ignorable="d" d:DesignWidth="80" d:DesignHeight="80"
-             d:DataContext="{x:Static design:DesignData.ChartKeyModel}"
+             d:DataContext="{x:Static design:DesignData.ChartKeyBottomLeft}"
              x:Class="KeyChart.GUI.Controls.ChartKey">
     <UserControl.Styles>
-        <Style Selector="TextBlock">
+        <Style Selector="#Layers ContentPresenter TextBlock">
+            <Setter Property="Background" Value="Magenta" />
             <Setter Property="FontFamily" Value="Segoe UI" />
             <Setter Property="FontSize" Value="14" />
         </Style>
-        <Style Selector="TextBlock.BaseLayer">
+        
+        <Style Selector="Button > Border">
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="BorderBrush">
+                <LinearGradientBrush>
+                    <GradientStop Color="#30ffffff" Offset="0" />
+                    <GradientStop Color="#30000000" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#20ffffff" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#40ffffff" />
+        </Style>
+        
+        <Style Selector="Button.LayerBottomLeft">
+            <Setter Property="Background" Value="#302E1ECD" />
+        </Style>
+        <Style Selector="Button.LayerBottomLeft:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#801D1381" />
+        </Style>
+        <Style Selector="Button.LayerBottomLeft > Border">
+            <Setter Property="BorderBrush">
+                <LinearGradientBrush>
+                    <GradientStop Color="#801D1381" Offset="1" />
+                    <GradientStop Color="#802E1ECD" Offset="0" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button.LayerBottomRight">
+            <Setter Property="Background" Value="#30FFB6C1" />
+        </Style>
+        <Style Selector="Button.LayerBottomRight > Border">
+            <Setter Property="BorderBrush">
+                <LinearGradientBrush>
+                    <GradientStop Color="#30ffffff" Offset="0" />
+                    <GradientStop Color="#30000000" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+        
+        <Style Selector="Button.LayerTopLeft">
+            <Setter Property="Background" Value="#20FFFFE0" />
+        </Style>
+        
+        <Style Selector="Button.LayerTopRight">
+            <Setter Property="Background" Value="#2090EE90" />
+        </Style>
+        
+        <Style Selector="TextBlock.LayerLabel.BaseLayer">
             <Setter Property="FontSize" Value="22" />
         </Style>
+        <Style Selector="TextBlock.LayerLabel.BottomLeft">
+            <Setter Property="Foreground" Value="LightBlue" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style Selector="TextBlock.LayerLabel.BottomRight">
+            <Setter Property="Foreground" Value="LightPink" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+        <Style Selector="TextBlock.LayerLabel.TopLeft">
+            <Setter Property="Foreground" Value="LightYellow" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <Style Selector="TextBlock.LayerLabel.TopRight">
+            <Setter Property="Foreground" Value="LightGreen" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+        <Style Selector="TextBlock.LayerLabel:not(.Symbol)">
+            <Setter Property="FontWeight" Value="Thin" />
+        </Style>
+        
+        <!--
+            <Style Selector="TextBlock.LayerLabel.BottomLeft">
+                <Setter Property="Foreground" Value="LightBlue">
+            </style>
+            <Style Selector="TextBlock.LayerLabel.BottomRight">
+                <Setter Property="Foreground" Value="LightPink">
+            </style>
+            <Style Selector="TextBlock.LayerLabel.TopLeft">
+                <Setter Property="Foreground" Value="LightGreen">
+            </style>
+            <Style Selector="TextBlock.LayerLabel.TopRight">
+                <Setter Property="Foreground" Value="LightYellow">
+            </style>
+        -->
+        
+        <!-- -->
+        <!-- <Style Selector="keyboards|KeyLayer "> -->
+        <!--     <Setter Property="Template"> -->
+        <!--         <ControlTemplate> -->
+        <!--             <TextBlock Text="{TemplateBinding Text}" /> -->
+        <!--         </ControlTemplate> -->
+        <!--     </Setter> -->
+        <!-- </Style> -->
+        
     </UserControl.Styles>
 
-    
-    <Button Background="#80400090" BorderThickness="1" BorderBrush="#30ffffff" 
+    <!-- Background="#80400090" -->
+    <Button BorderThickness="0"
+            
+            Classes.LayerTopLeft="{Binding LayerC.TargetTopLeft}"
+            Classes.LayerTopRight="{Binding LayerC.TargetTopRight}"
+            Classes.LayerBottomRight="{Binding LayerC.TargetBottomRight}"
+            Classes.LayerBottomLeft="{Binding LayerC.TargetBottomLeft}"
+            
             HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ItemsControl Items="{Binding Layers}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate><Grid /></ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="keyboards:KeyLayer">
-                    <TextBlock Text="{Binding Text}"
-                               IsVisible="{Binding LayerStyle.Display}"
-                               FontWeight="Thin"
-                               Foreground="{Binding LayerStyle.Color}"
-                               HorizontalAlignment="{Binding LayerStyle.Position, Converter={util:LabelAlignmentConverter}}"
-                               VerticalAlignment="{Binding LayerStyle.Position, Converter={util:LabelAlignmentConverter}}"
-                               Classes.BaseLayer="{Binding LayerStyle.BaseLayer}" 
-                               Classes.Symbol="{Binding Symbol}" >
-                    </TextBlock>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>  
+        <Border BorderThickness="2">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#10000000" Offset="0" />
+                    <GradientStop Color="#10ffffff" Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <Panel>
+                <TextBlock Classes="LayerLabel BaseLayer" DataContext="{Binding LayerC}" Text="{Binding Text}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"
+                           IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Classes.Symbol="{Binding Symbol}"
+                />
+                
+                <TextBlock DataContext="{Binding LayerTL}" Text="{Binding Text}"
+                           Classes="LayerLabel TopLeft"
+                           IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Classes.Symbol="{Binding Symbol}"
+                />
+                
+                <TextBlock DataContext="{Binding LayerTR}" Text="{Binding Text}"
+                           Classes="LayerLabel TopRight"
+                           IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Classes.Symbol="{Binding Symbol}"
+                />
+                
+                <TextBlock DataContext="{Binding LayerBL}" Text="{Binding Text}"
+                           Classes="LayerLabel BottomLeft"
+                           IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Classes.Symbol="{Binding Symbol}"
+                />
+                
+                <TextBlock DataContext="{Binding LayerBR}" Text="{Binding Text}"
+                           Classes="LayerLabel BottomRight"
+                           IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                           Classes.Symbol="{Binding Symbol}"
+                />
+            </Panel>
+        </Border>
+        <!-- <ItemsControl Items="{Binding Layers}" Name="Layers"> -->
+        <!--     <ItemsControl.ItemsPanel> -->
+        <!--         <ItemsPanelTemplate><Grid /></ItemsPanelTemplate> -->
+        <!--     </ItemsControl.ItemsPanel> -->
+        <!--     <ItemsControl.ItemTemplate> -->
+        <!--         <DataTemplate DataType="keyboards:KeyLayer"> -->
+        <!--             <TextBlock Text="{Binding Text}" -->
+        <!--                        IsVisible="{Binding LayerStyle.Display}" -->
+        <!--                        FontWeight="Black" -->
+        <!--                        Foreground="{Binding LayerStyle.Color}" -->
+        <!--                        HorizontalAlignment="{Binding LayerStyle.Position, Converter={util:LabelAlignmentConverter}}" -->
+        <!--                        VerticalAlignment="{Binding LayerStyle.Position, Converter={util:LabelAlignmentConverter}}" -->
+        <!--                        Classes="{Binding LayerStyle.Classes}" -->
+        <!-- -->
+        <!--                        > -->
+        <!--                  -->
+        <!--                        Classes.BaseLayer="{Binding LayerStyle.BaseLayer}"  -->
+        <!--                        Classes.Symbol="{Binding Symbol}" -->
+        <!--                 --> 
+        <!--             </TextBlock> -->
+        <!--         </DataTemplate> -->
+        <!--     </ItemsControl.ItemTemplate> -->
+        <!-- </ItemsControl>   -->
     </Button>
 </UserControl>

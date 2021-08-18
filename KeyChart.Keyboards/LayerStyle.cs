@@ -28,7 +28,7 @@ namespace KeyChart.Keyboards
 
         public bool BaseLayer { get; set; }
         public string Color { get; set; } = "White";
-        
+
         public LayerStyle() : this(0, "LayerStyle ?", "??") { }
         public LayerStyle(int index) : this(index, $"LayerStyle {index}", $"L{index}") { }
         public LayerStyle(int index, string name, string slug)

@@ -40,6 +40,8 @@ namespace KeyChart.GUI.Util
             var dlg = new MessageBox();
             dlg.Message = message;
             dlg.Title = title ?? "Information!";
+            dlg.Width = owner.Width;
+            dlg.Height = owner.Height;
             return dlg.ShowDialog(owner);
 
         }

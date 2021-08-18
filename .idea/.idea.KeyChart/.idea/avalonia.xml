@@ -3,14 +3,21 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="AvaloniaTest/Views/MainWindow.axaml" value="AvaloniaTest/AvaloniaTest.csproj" />
         <entry key="KeyChart.GUI/App.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Controls/ActionBar.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Controls/ChartKey.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Controls/LoadingIndicator.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Controls/Spinner.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Controls/TextSymbol.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/MainWindow.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/OverlayWindow.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Styles.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Util/MessageBox.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/ActionBar.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/ActionBarButton.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/ActionBarButton.xaml.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
+        <entry key="KeyChart.GUI/Views/ActionBarTpl.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Views/ConsoleView.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.GUI/Views/KeyboardView.axaml" value="KeyChart.GUI/KeyChart.GUI.csproj" />
         <entry key="KeyChart.Overlay/App.axaml" value="KeyChart.Overlay/KeyChart.Overlay.csproj" />

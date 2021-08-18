@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -210,6 +211,13 @@ namespace KeyChart.Platforms.Windows
         {
         }
 
+        private ushort dynamicKeysOffset = 0;
+        private ushort[] dynamicKeys = Array.Empty<ushort>();
+
+        public IReadOnlyList<ushort> DynamicKeys => dynamicKeys.ToImmutableArray();
+
+        public event EventHandler? DynamicKeysUpdated;
+
         protected override void HandleReportAsync(HidReport report)
         {
             if (report.ReadStatus == HidDeviceData.ReadStatus.WaitTimedOut) return;
@@ -225,7 +233,69 @@ namespace KeyChart.Platforms.Windows
                 Log($"Got data: {string.Join(" ", data.Select(b => $"{b:x2}"))}");
 
                 var command = (ViaCommand) data[0];
-                var reportString = $"Cmd: {command:g} ({data[0]:x2}) Args: ";
+
+                switch (command)
+                {
+                    // REF: https://github.com/qmk/qmk_firmware/blob/master/quantum/dynamic_keymap.h
+                    //      https://github.com/qmk/qmk_firmware/blob/master/quantum/dynamic_keymap.c
+                    //      https://github.com/qmk/qmk_firmware/blob/master/quantum/via.c
+                    case ViaCommand.dynamic_keymap_get_buffer:
+                        var batchDataOffset = (data[1] << 8) | data[2];
+                        var batchSize = data[3];
+                        var batchKeyOffset = batchDataOffset / 2;
+                        ushort index = 0;
+                        for (; ; index++)
+                        {
+                            var dataOffset = 4 + (index * 2);
+                            var keyOffset = batchKeyOffset + index;
+                            if (keyOffset >= dynamicKeys.Length)
+                                break;
+                            if (dataOffset+1 >= data.Length)
+                                break;
+                            //dynamicKeys.Insert(keyOffset, (ushort)((data[dataOffset] << 8) | data[dataOffset+1]));
+                            dynamicKeys[keyOffset] = (ushort)((data[dataOffset] << 8) | data[dataOffset+1]);
+                        }
+
+                        // var sbRow = new StringBuilder();
+                        // for (int i = 0; i < dynamicKeys.Length; i++)
+                        // {
+                        //     var kc = (KeyCode)dynamicKeys[i];
+                        //     if (kc != 0)
+                        //     {
+                        //         sbRow.Append($"{kc,-5:G}".Substring(0, 5));
+                        //         sbRow.Append(' ');
+                        //     }
+                        //
+                        //     if (kc != 0 && (i % 6) < 5) continue;
+                        //     
+                        //     OnRecievedLine(sbRow.ToString());
+                        //     sbRow.Clear();
+                        //     
+                        //     if (kc == 0) break;
+                        // }
+                        
+                        OnRecievedLine($"DynamicKeymap, offset: {batchDataOffset,3}+{batchSize,2}, keys[{batchKeyOffset,3}+{index,2} / {dynamicKeys.Length}]");
+
+                        dynamicKeysOffset += batchSize;
+                        if (dynamicKeysOffset < (dynamicKeys.Length * 2))
+                        {
+                            Thread.Sleep(TimeSpan.FromSeconds(.1));
+                            GetDynamicKeys();
+                        }
+                        else
+                        {
+                            DynamicKeysUpdated?.Invoke(this, EventArgs.Empty);
+                        }
+                        //var keySum = string.Join(" ", dynamicKeys.TakeWhile(kc => kc > 0).Select(kc => $"{(KeyCode)kc:G}").GroupBy((_, i) => ));
+                        
+                        // Debug.WriteLine(keySum);
+                        
+                        return;
+                    default:
+                        break;
+                }
+                // dynamic_keymap_macro_get_buffer_size
+                var reportString = $"{command,-36:g} ({data[0]:x2}): ";
                 for (var i = 1; i < data.Length; i++)
                 {
                     // if (data[i] == 0) break;
@@ -242,6 +312,20 @@ namespace KeyChart.Platforms.Windows
                 Debug.WriteLine($"{x}");
             }
         }
+
+        public void GetDynamicKeys(ushort matrixSize, byte layerCount)
+        {
+            dynamicKeys = new ushort[matrixSize * layerCount];
+            GetDynamicKeys();
+        }
+        
+        private void GetDynamicKeys()
+        {
+            var offset = BitConverter.GetBytes(dynamicKeysOffset);
+            if (BitConverter.IsLittleEndian) Array.Reverse(offset);
+            var count = (byte)Math.Min(28, (dynamicKeys.Length * 2) - dynamicKeysOffset);
+            SendCommand(ViaCommand.dynamic_keymap_get_buffer, offset[0], offset[1], count);
+        }
         
         public void SendCommand(ViaCommand cmd, params byte[] cmdData)
         {
@@ -249,11 +333,11 @@ namespace KeyChart.Platforms.Windows
 
 
             // var sendDevice = new HidDevice(DefaultDevice.DevicePath, DefaultDevice.Description);
-            // var data = cmdData.Prepend((byte)cmd).ToArray();
+            var data = cmdData.Prepend((byte)cmd).Prepend((byte)0).ToArray();
             //var reportLen = DefaultDevice.Capabilities.OutputReportByteLength;
-            var data = new byte[2];
-            data[1] = (byte)cmd;
-                
+            // var data = new byte[2];
+            // data[1] = (byte)cmd;
+            //     
             Log($"Sending: {cmd:g} => {string.Join(" ", data.Select(b => $"{b:x2}"))}");
 
             DefaultDevice.Write(data);

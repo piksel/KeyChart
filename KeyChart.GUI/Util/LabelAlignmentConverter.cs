@@ -4,6 +4,7 @@ using Avalonia.Data.Converters;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using KeyChart.Keyboards;
+using Piksel.TextSymbols;
 
 #nullable enable
 
@@ -40,6 +41,18 @@ namespace KeyChart.GUI.Util
             => p.HasFlag(LabelPosition.Center) ? HorizontalAlignment.Center
                 : p.HasFlag(LabelPosition.Right) ? HorizontalAlignment.Right
                 : HorizontalAlignment.Left;
+    }
+    
+    public class TextSymbolText
+    {
+        public TextSymbolText(Fa6 symbol)
+        {
+            Symbol = symbol;
+        }
+
+        public TextSymbol Symbol { get; }
+
+        public object? ProvideValue(IServiceProvider serviceProvider) => Symbol.Text;
     }
 
 

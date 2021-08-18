@@ -6,6 +6,7 @@
         <FluentTheme Mode="Dark"/>
         <StyleInclude Source="/Styles.axaml" />
         <StyleInclude Source="/Controls/LoadingIndicator.axaml" />
+        <StyleInclude Source="/Controls/ActionBar.axaml" />
     </Application.Styles>
     <!-- <pu:NotifyIcon.Icon> -->
     <!--     avares://KeyChart/Assets/icon.ico -->

@@ -349,7 +349,7 @@ namespace KeyChart.GUI.Platforms.Windows.Winterop
 
             //always destroy the unmanaged handle (even if called from the GC)
             WinApi.DestroyWindow(MessageWindowHandle);
-            messageHandler = null;
+            messageHandler = null!;
         }
 
         #endregion

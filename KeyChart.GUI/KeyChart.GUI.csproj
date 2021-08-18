@@ -24,7 +24,7 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.6" />
         <PackageReference Include="Avalonia.Win32" Version="0.10.6" />
         <PackageReference Include="hidlibrary" Version="3.3.40" />
-        <PackageReference Include="PkgSrc.Nuke.Paths" Version="5.102.3" />
+        <PackageReference Include="Piksel.TextSymbols" Version="0.1.1" />
         <PackageReference Include="ReactiveUI" Version="13.2.10" />
     </ItemGroup>
     <ItemGroup>
@@ -32,16 +32,22 @@
         <DependentUpon>KeyboardView.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Controls\ActionBar.axaml.cs">
+        <DependentUpon>ActionBar.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Remove="Controls\TextSymbol.axaml.cs" />
     </ItemGroup>
-    <ItemGroup>
-        <Compile Remove="pkgsrc\PkgSrc.Nuke.Paths\Shims\JetBrains.Annotations.cs" />
-    </ItemGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\KeyChart.Keyboards\KeyChart.Keyboards.csproj" />
       <ProjectReference Include="..\KeyChart.Services\KeyChart.Services.csproj" />
     </ItemGroup>
     <ItemGroup>
       <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <AvaloniaXaml Remove="Controls\TextSymbol.axaml" />
     </ItemGroup>
 
 

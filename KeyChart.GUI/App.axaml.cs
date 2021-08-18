@@ -13,6 +13,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Platform;
 using KeyChart.Keyboards;
 using Avalonia.Win32;
+using KeyChart.GUI.Config;
 using KeyChart.GUI.Platforms;
 using KeyChart.GUI.Util;
 using KeyChart.GUI.Views;
@@ -27,7 +28,7 @@ namespace KeyChart.GUI
         private static KeyboardViewModel? keyboardViewModel;
         public static AppPaths Paths { get; } = AppPaths.ForApp<App>("KeyChart", "piksel");
 
-        public static DataStore<Config> ConfigStore { get; } =
+        public static DataStore<AppConfig> ConfigStore { get; } =
             new(Paths.ConfigPath / "config.json", new SystemTextJsonSerializer(
                 new JsonSerializerOptions
                 {
@@ -37,14 +38,12 @@ namespace KeyChart.GUI
                     ReadCommentHandling = JsonCommentHandling.Skip,
                 }));
 
-        public static Config Config => ConfigStore.Data;
+        public static AppConfig Config => ConfigStore.Data;
         
         public static DataStore<KeyboardModel> KeyboardStore { get; } = new(Paths.ConfigPath / "keyboard.json");
         public static KeyboardModel? Keyboard => KeyboardStore.Data;
 
-        
-        public static QmkApiClient Qmk { get; } = new (Paths.CacheDir, new SystemTextJsonSerializer(
-            new JsonSerializerOptions {PropertyNameCaseInsensitive = true}));
+        public static QmkApiClient Qmk { get; } = new (Paths.CacheDir, SystemTextJsonSerializer.SnakeCaseSerializer);
 
         public static KeyboardViewModel? KeyboardViewModel
         {
@@ -123,6 +122,10 @@ namespace KeyChart.GUI
             await KeyboardStore.LoadOrDefault(() => null);
 
             var ofd = new OpenFileDialog();
+            ofd.Filters = new List<FileDialogFilter>(new FileDialogFilter[]
+            {
+                new() { Name = "JSON files", Extensions = new List<string>(new[] { "json" })},
+            });
             var files = await ofd.ShowAsync((Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
             if (files.FirstOrDefault() is not { } selectedFile) return null;
             await using var fileStream = File.OpenRead(selectedFile);
@@ -161,12 +164,5 @@ namespace KeyChart.GUI
             }
             return model;
         }
-    }
-
-    public class Config
-    {
-        public WindowConfig? MainWindow { get; set; }
-        //
-        public record WindowConfig(int Width, int Height, int Left, int Top);
     }
 }

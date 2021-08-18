@@ -2,11 +2,10 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:util="clr-namespace:KeyChart.GUI.Util"
                xmlns:views="clr-namespace:KeyChart.GUI.Views"
-               xmlns:fontAwesome="clr-namespace:KeyChart.Keyboards.FontAwesome;assembly=KeyChart.Keyboards"
                xmlns:design="clr-namespace:KeyChart.GUI.Design"
-               xmlns:controls="clr-namespace:KeyChart.GUI.Controls"
+               xmlns:c="clr-namespace:KeyChart.GUI.Controls"
+               xmlns:util="clr-namespace:KeyChart.GUI.Util"
                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="780"
                x:Class="KeyChart.GUI.MainWindow"
                FontSize="14"
@@ -22,6 +21,8 @@
                Closing="Window_OnClosing"
                Closed="TopLevel_OnClosed"
                d:DataContext="{x:Static design:DesignData.MainWindowViewModelLoading}"
+               MinHeight="200"
+               MinWidth="50"
                Title="KeyChart.Overlay">
     <Window.Styles>
         <Style Selector="TitleBar:fullscreen">
@@ -49,70 +50,73 @@
                 </StackPanel>
             </Border>
             <Border Background="#80000000" DockPanel.Dock="Bottom" Padding="5, 0, 5, 5">
-                <DockPanel>
-                    <StackPanel Orientation="Horizontal"
-                                Spacing="5"
-                                DockPanel.Dock="Left"
-                    >
-                        <Button Tag="overlay" Click="Button_OnClick">
-                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                <TextBlock Classes="Symbol" 
-                                           Text="{x:Static fontAwesome:Symbol.Eye}" 
-                                           FontSize="16" />
-                                <TextBlock Text="Overlay" />
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="import" Click="Button_OnClick">
-                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                <TextBlock Classes="Symbol" 
-                                           Text="{x:Static fontAwesome:Symbol.FileImport}" 
-                                           FontSize="16" />
-                                <TextBlock Text="Keyboard" />
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="console" Click="Button_OnClick">
-                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                <TextBlock Classes="Symbol" 
-                                           Text="{x:Static fontAwesome:Symbol.Terminal}" 
-                                           FontSize="16" />
-                                <TextBlock Text="Console" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                                DockPanel.Dock="Right"
-                                Spacing="5">
-                        <Button Tag="reset" Click="Button_OnClick">
-                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                <TextBlock Classes="Symbol" 
-                                           Text="{x:Static fontAwesome:Symbol.Trash}" 
-                                           FontSize="16" />
-                                <TextBlock Text="Reset" />
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="loading" Click="Button_OnClick">
-                            <StackPanel Orientation="Horizontal" Spacing="5">
-                                <TextBlock Classes="Symbol" 
-                                           Text="{x:Static fontAwesome:Symbol.Loader}" 
-                                           FontSize="16" />
-                                <TextBlock Text="Loading" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                    <Panel />
-                </DockPanel>
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <!-- Header="{c:Label Keyboard:, Fa6Symbol=Keyboard}" -->
+                    <c:ActionBar 
+                        DockPanel.Dock="Left" ButtonClicked="ActionButtonClicked" Grid.Column="0">
+                        <c:ActionBar.Header>
+                            <TextBlock Text="{util:TextSymbolText Keyboard}"
+                                       Classes="Symbol Thin"
+                                       FontSize="28"
+                                       />
+                        </c:ActionBar.Header>
+                        <Button c:ActionBar.Action="overlay" Content="{c:Label Preview, Fa6Symbol=TvRetro}" CommandParameter="overlay"  />
+                        <Button c:ActionBar.Action="import" Content="{c:Label Import, Fa6Symbol=FileImport}" />
+                        <Button c:ActionBar.Action="magic" Content="{c:Label Magic?, Fa6Symbol=WandSparkles}" CommandParameter="magic" />
+                    </c:ActionBar>
+                    
+
+<!--
+                                 Header="{c:Label HID:, Fa6Symbol=UsbDrive}" 
+
+-->
+                    <c:ActionBar DockPanel.Dock="Right"  Grid.Column="1"
+                                 ButtonClicked="ActionButtonClicked" HorizontalAlignment="Center">
+                        <c:ActionBar.Header>
+                            <TextBlock Text="{util:TextSymbolText UsbDrive}"
+                                       Classes="Symbol Thin"
+                                       FontSize="28"
+                            />
+                        </c:ActionBar.Header>
+                        <Button c:ActionBar.Action="connect" Content="{c:Label Connect, Fa6Symbol=Plug}" />
+                        <Button c:ActionBar.Action="dynkeys" Content="{c:Label Keymap, Fa6Symbol=Upload}" />
+                    </c:ActionBar>
+                    <!--
+                                  Header="{c:Label Console:, Fa6Symbol=SquareTerminal}" 
+                    
+                    -->
+                    <c:ActionBar  Grid.Column="2"
+                                  ButtonClicked="ActionButtonClicked">
+                        <c:ActionBar.Header>
+                            <TextBlock Text="{util:TextSymbolText RectangleTerminal}"
+                                       Classes="Symbol Thin"
+                                       FontSize="28"
+                            />
+                        </c:ActionBar.Header>
+                        <Button c:ActionBar.Action="console" Content="{c:Label Hide, Fa6Symbol=EyeSlash}" />
+                        <Button c:ActionBar.Action="reset" Content="{c:Label Clear, Fa6Symbol=Trash}" />
+                    </c:ActionBar>
+                </Grid>
             </Border>
             <Border Background="#80000000" Padding="10"  
                     HorizontalAlignment="Stretch">
-                <DockPanel
-                    
+                <Grid
+                    Name="ConsoleWrapper"
+                    RowDefinitions="*,2,200"
                 >
-                    <Border DockPanel.Dock="Bottom" Height="200">
-                        <views:ConsoleView DataContext="{Binding Console}" />
-                    </Border>
+                    
+                        <views:ConsoleView
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Name="Console"
+                            IsVisible="{Binding Converter={x:Static ObjectConverters.IsNotNull}}"
+                            DataContext="{Binding Console}" />
+
+                    <GridSplitter Grid.Row="1" Background="Transparent"></GridSplitter>
+
 
                     <!-- IsPaneOpen="{Binding Console, Converter={x:Static ObjectConverters.IsNotNull}}"> -->
-                    <Grid>
+                    <Grid Grid.Row="0">
                         <Border IsVisible="{Binding Loaded}" MaxWidth="1000" HorizontalAlignment="Center">
                             <views:KeyboardView Name="KeyboardView" 
                                                 DataContext="{Binding KeyboardViewModel}" 
@@ -124,7 +128,7 @@
                                 VerticalAlignment="Center"
                                 Background="#80000000"
                                 Padding="20" Width="300">
-                            <controls:LoadingIndicator
+                            <c:LoadingIndicator
                                 Foreground="White" 
                                 PrimaryColor="Orange"
                                 SecondaryColor="Magenta"
@@ -132,7 +136,7 @@
                             />
                         </Border>
                     </Grid>
-                </DockPanel>
+                </Grid>
             </Border>
         </DockPanel>
     </Panel>

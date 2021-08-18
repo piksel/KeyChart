@@ -8,6 +8,7 @@ namespace KeyChart.GUI.Util
 {
     public class QmkApiClient: CachedApiClient
     {
+
         public async ValueTask<KeyboardQueryResult?> KeyboardInfo([NotNull] string keyboardName, CancellationToken? token = null)
             => await GetJson<KeyboardQueryResult>($"https://api.qmk.fm/v1/keyboards/{keyboardName}", "keyboards", token ?? CancellationToken.None);
         

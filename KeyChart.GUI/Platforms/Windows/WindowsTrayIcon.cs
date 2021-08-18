@@ -11,17 +11,17 @@ namespace KeyChart.GUI.Platforms.Windows
 {
   public class WindowsTrayIcon : ITrayIcon
   {
-    public ICommand DoubleClickCommand { get; set; }
+    public ICommand? DoubleClickCommand { get; set; }
 
-    public ICommand BalloonClickedCommand { get; set; }
+    public ICommand? BalloonClickedCommand { get; set; }
 
     private TaskBarIcon? taskBarIcon;
 
-    private object lastBalloonState;
+    private object? lastBalloonState;
     
-    public WindowIcon Icon { get; set; }
-    public string TooltipText { get; set; }
-    public ContextMenu ContextMenu { get; set; }
+    public WindowIcon? Icon { get; set; }
+    public string TooltipText { get; set; } = "";
+    public ContextMenu? ContextMenu { get; set; }
     
     public HotkeyWindowImplWin32 Window { get; set; }
 

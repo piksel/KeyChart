@@ -1,9 +1,10 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:fontAwesome="clr-namespace:KeyChart.Keyboards.FontAwesome;assembly=KeyChart.Keyboards">
+        xmlns:util="clr-namespace:KeyChart.GUI.Util">
     <Styles.Resources>
         <Thickness x:Key="PageMargin">40 0 40 0</Thickness>    
         <FontFamily x:Key="Fa6FontFamily">avares://KeyChart/Assets/Fonts#Font Awesome 6 Pro</FontFamily>
+        <!-- <FontFamily x:Key="Fa6DuoFontFamily">avares://KeyChart/Assets/Fonts#Font Awesome 6 Duotone</FontFamily> -->
         <!-- <FontFamily x:Key="Fa6FontFamily1">resm:KeyChart.Avalonia.Assets.Fonts#Font Awesome 6 Pro</FontFamily> -->
         <!-- <FontFamily x:Key="Fa6FontFamily3">./Assets/Fonts/#Font Awesome 6 Pro</FontFamily> -->
         <!-- <FontFamily x:Key="Fa6FontFamily">Assets/Fonts/fa6-thin.otf#Font Awesome 6 Pro</FontFamily> -->
@@ -50,10 +51,12 @@
     </Styles.Resources>
     <Design.PreviewWith>
         <Border Padding="20" Background="blue">
-            <StackPanel Spacing="5">        
-                <TextBlock Text="{x:Static fontAwesome:Symbol.Croissant}" FontFamily="{StaticResource Fa6FontFamily}" FontSize="64" />
-                <TextBlock Text="{x:Static fontAwesome:Symbol.Bath}" FontFamily="{StaticResource Fa6FontFamily}" FontSize="64" />
-                <TextBlock Text="{x:Static fontAwesome:Symbol.Deer}" FontFamily="{StaticResource Fa6FontFamily}" FontSize="64" />
+            <StackPanel Spacing="5">
+                <TextBlock Text="{util:TextSymbolText Croissant}" Classes="Symbol" FontSize="64" />
+                <TextBlock Text="{util:TextSymbolText Bath}" Classes="Symbol" FontSize="64" />
+                <TextBlock Text="{util:TextSymbolText Deer}" Classes="Symbol" FontSize="64" />
+                <TextBlock Text="{util:TextSymbolText Deer}" Classes="Symbol Solid" FontSize="64" />
+                <TextBlock Text="{util:TextSymbolText Deer}" Classes="Symbol Thin" FontSize="64" />
                 <!-- <TextBlock Text="Fa6FontFamily1" FontFamily="{StaticResource Fa6FontFamily1}" /> -->
                 <!-- <TextBlock Text="Fa6FontFamily2" FontFamily="{StaticResource Fa6FontFamily2}" /> -->
                 <!-- <TextBlock Text="Fa6FontFamily3" FontFamily="{StaticResource Fa6FontFamily3}" /> -->
@@ -63,6 +66,13 @@
     </Design.PreviewWith>
     <Style Selector="TextBlock.Symbol">
         <Setter Property="FontFamily" Value="{StaticResource Fa6FontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+    <Style Selector="TextBlock.Symbol.Solid">
+        <Setter Property="FontWeight" Value="Black" />
+    </Style>
+    <Style Selector="TextBlock.Symbol.Thin">
+        <Setter Property="FontWeight" Value="Thin" />
     </Style>
     <Style Selector="Button">
         <Setter Property="Background" Value="#80400090" />

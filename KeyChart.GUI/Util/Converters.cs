@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Avalonia;
+using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Markup.Xaml;
 
@@ -17,7 +18,7 @@ namespace KeyChart.GUI.Util
         public override object ProvideValue(IServiceProvider serviceProvider) => this;
         
 
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value switch
             {
@@ -25,7 +26,7 @@ namespace KeyChart.GUI.Util
                 (double x, double y) when targetType == typeof(Size) => new Size(x, y),
                 Size(var x, var y) when targetType == typeof(Vector) => new Vector(x, y),
                 Vector(var x, var y) when targetType == typeof(Size) => new Size(x, y),
-                _ => null,
+                _ => new BindingNotification(new NotSupportedException("Conversion not supported"), BindingErrorType.Error),
             };
         }
 

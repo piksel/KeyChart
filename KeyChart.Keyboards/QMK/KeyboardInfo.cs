@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -75,6 +76,8 @@ namespace KeyChart.Keyboards.QMK
 
     public class Key
     {
+        // private static readonly ImmutableArray<byte> DefaultMatrix = ImmutableArray.Create<byte>(0, 0);
+        
         public float X { get; set; }
         public float Y { get; set; }
 
@@ -82,7 +85,15 @@ namespace KeyChart.Keyboards.QMK
         public float W { get; set; } = 1;
 
         public string? Label { get; set; }
-        public int[] Matrix { get; set; } = Array.Empty<int>();
+        
+        [JsonPropertyName("matrix")]
+        public short[] MatrixArray { get; set; } = Array.Empty<short>();
+
+        [JsonIgnore]
+        public (byte X, byte Y) Matrix =>
+            MatrixArray?.Length == 2
+                ? ((byte)MatrixArray[1], (byte)MatrixArray[0])
+                : (byte.MaxValue, byte.MaxValue);
     }
 
     public class KeyboardQueryResult
